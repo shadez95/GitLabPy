@@ -1,15 +1,13 @@
 from setuptools import setup, find_packages
 from os import path
 
-here = path.abspath(path.dirname(__file__))
-
 # Get the long description from the README file
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+with open(path.join(path.dirname(__file__), 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
     name='GitLabPy',
-    version='0.2',
+    version='0.3',
     py_modules=['GitLabPy'],
     description="A Python library to sort GitLab's Webhooks",
     long_description=long_description,
