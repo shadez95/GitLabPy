@@ -27,5 +27,5 @@ setup(
     ],
     license='MIT',
     keywords='gitlabpy',
-    install_requires=['json']
+    install_requires=[]
 )

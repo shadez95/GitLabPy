@@ -1,1 +1,3 @@
 dist/*
+GitLabPy.egg-info/*
+.pypirc

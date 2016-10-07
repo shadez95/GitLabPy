@@ -5,3 +5,7 @@ Some of the JSON data coming from GitLab's webhooks are set as attributes to the
 
 ## Requirements
 * Python3 (has only been tested with Python 3.5.2)
+
+
+## Install
+* `pip install GitLabPy`
