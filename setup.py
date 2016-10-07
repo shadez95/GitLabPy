@@ -26,6 +26,6 @@ setup(
         'Programming Language :: Python :: 3.5'
     ],
     license='MIT',
-    keywords='gitlabpy'
-    install_requires=['json'],
+    keywords='gitlabpy',
+    install_requires=['json']
 )
