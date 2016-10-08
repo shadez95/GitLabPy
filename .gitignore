@@ -3,3 +3,4 @@ GitLabPy.egg-info/*
 .pypirc
 __pycache__/*
 server-output/*
+build/*
