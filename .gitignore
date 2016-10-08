@@ -4,3 +4,4 @@ GitLabPy.egg-info/*
 __pycache__/*
 server-output/*
 build/*
+build/lib/GitLabPy.py
