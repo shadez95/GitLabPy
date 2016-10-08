@@ -2,14 +2,22 @@ import json
 # from gitlab_json import GitLabJSON
 # with open(".\server-output\gitlab-output.json") as json_file:
 #     d = json.load(json_file)
+#
+# GitLab_Obj = GitLab(json_data, settings) , where settings is a dict
+# GitLab_Obj.build(msg="blah blah", )
 
 class GitLab:
     """
     Instantiate with 2 arguments, parsed json string <string> and settings <dict>
     """
-    def __init__(self, arg1, arg2):
+    def __init__(self, arg1):
         self.json_data = arg1
-        self.settings = arg2
+
+        # Types of build and issue JSON from GitLab Webhook
+        self.build_types = ["success", "failed", "running"]
+        self.issue_types = ["created", "update", "closed"]
+
+        # Below is for common JSON objects
         self.object_kind = arg1.get("object_kind", "")
         self.project_id = arg1.get("project_id", "")
         self.ref = arg1.get("ref", "")
@@ -30,17 +38,6 @@ class GitLab:
             return False
         else:
             return True
-
-    def get_repo_url(self, git_type=""):
-
-        if check_repository_atttr():
-            return False
-        if git_type.lower() == "http":
-            return self.repository.get("git_http_url")
-        elif git_type.lower() == "ssh":
-            return self.repository.get("git_ssh_url")
-        else:
-            return self.repository.get("url")
 
     def get_url(self, url=None):
         """
@@ -70,97 +67,51 @@ class GitLab:
         else:
             return False
 
-    def whoops_error(self, message=None, **kwargs):
-        # In the future this needs to not show kwargs and other debug information
-        if message:
-            return "Whoops! An error occured.. object_kind = '{}'\n{}\nkwargs: {}\n".format(self.object_kind, message, kwargs)
+    def build(self, *args):
+        """
+        Checks to see if JSON data from GitLab is build data and also checks to see that you want build data. If so, return True
+        Arguments: *args <bool><string><list>
+            - can be a list of certain build data  you want
+            - build types are 'success', 'failed', 'runnning'
+        """
+        if self.object_kind == "build" and args in self.build_types:
+            return True
         else:
-            return "Whoops! An error occured.. object_kind = '{}'\nkwargs: {}\n".format(self.object_kind, kwargs)
+            return False
 
-    def build(self):
-        conditions = self.settings.get("build_types")
-        if "SUCCESS" in conditions:
-            SUCCESS = True
+    def note(self, note_types=False):
+        """
+        Checks to see if JSON data is a note (comment) and you want note JSON data. If so, return True
+        Arguments: note_types <bool>
+            - Returns True if you want note type JSON data to return True and JSON data is a note
+            - Default - False
+        """
+        if note_types and self.object_kind == "note":
+            return True
         else:
-            SUCCESS = False
-        if "FAILED" in conditions:
-            FAILED = True
-        else:
-            FAILED = False
-        if "CREATED" in conditions:
-            CREATED = True
-        else:
-            CREATED = False
+            return False
 
-        if self.build_status.upper() == "CREATED" and CREATED:
-            msg = "[BUILD] Commit: '{}'\nAuthor: {}\nBuild Status: {}\nhttps://gitlab.com/71stSOG/71stWebsite/pipelines/{}".format(
-                self.commit.get("message"), self.user.get("name"), self.build_status.upper()
-            )
-        elif self.build_status.upper() in {"SUCCESS", "FAILED"} and CREATED or FAILED:
-            msg = "[BUILD] Commit: '{}'\nAuthor: {}\nBuild Duration: {}\nBuild Status: {}\nhttps://gitlab.com/71stSOG/71stWebsite/pipelines/{}".format(
-                self.commit.get("message"), self.user.get("name"),
-                self.json_data.get("build_duration"), self.build_status.upper(),
-                self.commit.get("id")
-            )
+    def merge_request(self, merge_request_types=False):
+        """
+        Checks to see if JSON data is a merge request and if you want merge_request data. If so, return True
+        Arguments: merge_request_types <bool>
+            - True if you want merge request data from GitLab to be returned if JSON data is merge request.
+            - Default - False
+        """
+        if merge_request_types and self.object_kind == "merge_request":
+            return True
         else:
-            msg = self.whoops_error(message="Error occurred in build function")
-        return msg
+            return False
 
-    def note(self):
-        conditions = self.settings.get("note_types")
-        msg = ""
-        if conditions:
-            msg = "[{}] {} commented on {}\n'{}'\n{}".format(
-                self.object_attributes.get("noteable_type"), self.user.get("name"),
-                self.object_attributes.get("id"), self.object_attributes.get("note"),
-                self.object_attributes.get("url")
-            )
-        return msg
-
-    def merge_request(self):
-        conditions = self.settings.get("merge_request")
-        msg = ""
-        if conditions:
-            msg = "[MERGE REQUEST] {} wants to merge '{}' into '{}'\n{}\n{}".format(
-                self.user.get("name"), self.object_attributes.get("source_branch"), self.object_attributes.get("target_branch"),
-                self.object_attributes.get("title"), self.json_data.get("url")
-            )
-        return msg
-
-    def issue(self):
-        conditions = self.settings.get("issue_types")
-        ALL = False
-        if type(conditions) is list:
-            for item in conditions:
-                if item == "CREATED":
-                    CREATED = True
-                else:
-                    CREATED = False
-                if item == "UPDATE":
-                    UPDATE = True
-                else:
-                    UPDATED = False
-                if item == "CLOSED":
-                    CLOSED = True
-                else:
-                    CLOSED = False
-        elif type(conditions) is bool:
-            ALL = True
+    def issue(self, *args):
+        """
+        Checks to see if JSON data is an issue from GitLabJSON
+        Arguments: *args <bool><string><list>
+            - can be list of issue types or boolean
+            = issue types are 'create', 'update', 'closed'
+            - True if you want all issues pass this conditional function
+        """
+        if self.issue_types in issue_types_arg or issue_types_arg or issue_types_arg in self.issue_types:
+            return True
         else:
-            return self.whoops_error("Error occurred in issue function")
-        if self.object_attributes.get("action") == "created" or ALL:
-            msg = "[ISSUE] #{} {}\nCreated by {}\n{}".format(self.object_attributes.get("iid"),
-                self.object_attributes.get("title"), self.user.get("name"),
-                self.object_attributes.get("url")
-            )
-        elif self.object_attributes.get("action") == "update" or ALL:
-            msg = "[ISSUE] #{} {}\nUpdated by {}\n{}".format(self.object_attributes.get("iid"),
-                self.object_attributes.get("title"), self.user.get("name"),
-                self.object_attributes.get("url")
-            )
-        elif self.object_attributes.get("action") == "closed" or ALL:
-            msg = "[ISSUE] #{} {}\nClosed by {}\n{}".format(self.object_attributes.get("iid"),
-                self.object_attributes.get("title"), self.user.get("name"),
-                self.object_attributes.get("url")
-            )
-        return msg
+            return False
