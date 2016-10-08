@@ -1,10 +1,4 @@
 import json
-# from gitlab_json import GitLabJSON
-# with open(".\server-output\gitlab-output.json") as json_file:
-#     d = json.load(json_file)
-#
-# GitLab_Obj = GitLab(json_data, settings) , where settings is a dict
-# GitLab_Obj.build(msg="blah blah", )
 
 class GitLab:
     """
