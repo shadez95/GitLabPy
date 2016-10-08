@@ -1,5 +1,5 @@
 # GitLabPy
-A Python library to sort GitLab's Webhooks
+A Python module to help sort GitLab's Webhooks
 
 Some of the JSON data coming from GitLab's webhooks are set as attributes to the GitLab class. Their are functions within the GitLab class that allow for easy handling of the JSON data.
 
