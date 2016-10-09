@@ -8,8 +8,7 @@ class GitLab:
         self.json_data = arg1
 
         # Types of build and issue JSON from GitLab Webhook
-        self.build_types = ["success", "failed", "running"]
-        self.issue_types = ["created", "update", "closed"]
+        self.issue_types = ["open", "update", "closed"]
 
         # Below is for common JSON objects
         self.object_kind = arg1.get("object_kind", "")
@@ -68,7 +67,7 @@ class GitLab:
             - can be a list of certain build data  you want
             - build types are 'success', 'failed', 'runnning'
         """
-        if self.object_kind == "build" and args in self.build_types:
+        if self.object_kind == "build" and args in self.build_status:
             return True
         else:
             return False
@@ -102,10 +101,18 @@ class GitLab:
         Checks to see if JSON data is an issue from GitLabJSON
         Arguments: *args <bool><string><list>
             - can be list of issue types or boolean
-            = issue types are 'create', 'update', 'closed'
+            = issue types are 'open', 'update', 'closed'
             - True if you want all issues pass this conditional function
         """
-        if self.issue_types in issue_types_arg or issue_types_arg or issue_types_arg in self.issue_types:
+        if self.object_kind != "issue":
+            return False
+
+        if "open" in args or "closed" in args:
+            if self.object_attributes.get("state") == "closed" and "closed" in args:
+                return True
+            elif self.object_attributes.get("action") == "open" and "open" in args:
+                return True
+        elif "update" in args and self.object_attributes.get("action") == "update":
             return True
         else:
             return False
