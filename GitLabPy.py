@@ -2,7 +2,7 @@ import json
 
 class GitLab:
     """
-    Instantiate with 2 arguments, parsed json string <string> and settings <dict>
+    Instantiate with 1 argument, parsed json string <string>
     """
     def __init__(self, arg1):
         self.json_data = arg1
