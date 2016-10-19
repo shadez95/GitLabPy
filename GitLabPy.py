@@ -67,7 +67,7 @@ class GitLab:
             - can be a list of certain build data  you want
             - build types are 'success', 'failed', 'runnning'
         """
-        if self.object_kind == "build" and args in self.build_status:
+        if self.object_kind == "build" and self.build_status in args:
             return True
         else:
             return False
