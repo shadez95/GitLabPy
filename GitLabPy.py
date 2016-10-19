@@ -35,8 +35,7 @@ class GitLab:
     def get_url(self, url=None):
         """
         Arguments:
-            - json_data : parsed json <string>
-            - git_type : type of git url <string>
+            - url : type of url to return <string>
                 * input types:
                     - "http" : retrieve git http url
                     - "ssh" : retrieve git ssh url
@@ -55,6 +54,10 @@ class GitLab:
             return self.repository.get("url")
 
     def get_repo_description(self):
+        """
+        Arguments: None
+        Checks to see if the key 'description' is in the webhook
+        """
         if check_repository_atttr():
             return self.repository.get("description")
         else:
@@ -101,7 +104,7 @@ class GitLab:
         Checks to see if JSON data is an issue from GitLabJSON
         Arguments: *args <bool><string><list>
             - can be list of issue types or boolean
-            = issue types are 'open', 'update', 'closed'
+            - issue types are 'open', 'update', 'closed'
             - True if you want all issues pass this conditional function
         """
         if self.object_kind != "issue":
