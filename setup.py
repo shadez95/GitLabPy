@@ -7,9 +7,9 @@ with open(path.join(path.dirname(__file__), 'README.md'), encoding='utf-8') as f
 
 setup(
     name='GitLabPy',
-    version='0.5.1610181',
+    version='0.5.1610182',
     py_modules=['GitLabPy'],
-    description="A Python library to sort GitLab's Webhooks",
+    description="A Python module to sort GitLab's Webhooks",
     long_description=long_description,
     author='Dixon Begay',
     author_email='dixonbegay@gmail.com',
