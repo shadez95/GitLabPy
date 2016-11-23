@@ -58,3 +58,6 @@ The JSON data that is instantiated with the GitLab class is also attribute of th
         - can be list of issue types or boolean
         - issue types are 'open', 'update', 'closed'
         - True if you want all issues pass this conditional function
+        
+### Example
+An example of how to utilize this can be found [here] (https://github.com/dixon13/GitLabPy/tree/master/examples/Django-App)
