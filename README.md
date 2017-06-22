@@ -11,7 +11,7 @@ Some of the JSON data coming from GitLab's webhooks are set as attributes to the
 * `pip install GitLabPy`
 
 ## How to use
-Below is a list of the attributes and methods of the GitLab class. Each allows for easy handling of the GitLab webhook JSON data.
+Check out the wiki for information.
 
 ### Example
 An example of how to utilize this can be found [here] (https://github.com/dixon13/GitLabPy/tree/master/examples/Django-App)
