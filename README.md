@@ -14,4 +14,4 @@ Some of the JSON data coming from GitLab's webhooks are set as attributes to the
 Check out the wiki for information.
 
 ### Example
-An example of how to utilize this can be found [here] (https://github.com/dixon13/GitLabPy/tree/master/examples/Django-App)
+An example of how to utilize this can be found [here](https://github.com/dixon13/GitLabPy/tree/master/examples/Django-App)
