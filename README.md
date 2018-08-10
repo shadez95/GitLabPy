@@ -11,7 +11,7 @@ Some of the JSON data coming from GitLab's webhooks are set as attributes to the
 * `pip install GitLabPy`
 
 ## How to use
-Check out the [wiki](https://github.com/dixon13/GitLabPy/wiki) for information.
+Check out the [wiki](https://github.com/shadez95/GitLabPy/wiki) for information.
 
 ### Example
-An example of how to utilize this can be found [here](https://github.com/dixon13/GitLabPy/tree/master/examples/Django-App)
+An example of how to utilize this can be found [here](https://github.com/shadez95/GitLabPy/tree/master/examples/Django-App)
